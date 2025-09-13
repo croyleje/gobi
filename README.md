@@ -18,6 +18,17 @@ the `go run main.go` command to test your changes and then use
 somewhere in your path or setup the __GOBIN__ environmental variable and add it
 to your __PATH__.
 
+## Hyprland Configuration
+
+Below is the _windowrule_ and _bind_ I use to call __gobi__.
+
+### windowrule
+`windowrule = fullscreen,class:gobi`
+
+### bind
+_Change_ __\$TERMINAL__ _to your default terminal client if you don't have the_
+__TERMINAL__ _environmental variable set._
+`bind = $mainMod, Q, exec, $TERMINAL --class "gobi" -e /path/to/gobi`
 
 ## Screenshot
 ![screenshot](./gobi.png)
