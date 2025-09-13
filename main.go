@@ -11,6 +11,9 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
+// The default colors and border style is set here via the lipgloss.Color()
+// function please https://github.com/charmbracelet/lipgloss for explanation of
+// how the colors are set 4,8,24 bit colors are supported.
 var (
 	termWidth, termHight int
 	heading              = lipgloss.NewStyle().Bold(true).Margin(1, 2)
@@ -18,6 +21,7 @@ var (
 	selected             = lipgloss.NewStyle().Foreground(lipgloss.Color("5")).Bold(true).Border(lipgloss.RoundedBorder()).BorderForeground(lipgloss.Color("5")).Width(14).Padding(1).Margin(1)
 )
 
+// Default commands.
 const (
 	Suspend   = iota
 	Lock      = iota
@@ -34,6 +38,8 @@ type model struct {
 	selected map[int]struct{}
 }
 
+// Commands passed to your terminal self-explanatory note flags and options are
+// passed with in comma separated list inside quotes.
 func parse(choice string) {
 	switch choice {
 	case "Suspend":
@@ -89,6 +95,8 @@ func parse(choice string) {
 	}
 }
 
+// IF your want to change the order the commands are displayed or remove a
+// command do it here.
 func initialModel() model {
 	return model{
 		choices:  []string{"Suspend", "Lock", "Logout", "Shutdown", "Reboot", "Hibernate", "Exit"},
@@ -100,6 +108,7 @@ func (m model) Init() tea.Cmd {
 	return tea.Batch(nil, tea.EnterAltScreen)
 }
 
+// Default key bindings.
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.WindowSizeMsg:
@@ -148,6 +157,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m model) View() string {
+	// Header text.
 	header := heading.Render("gobi v0.1")
 	choices := lipgloss.NewStyle().Render()
 
@@ -165,6 +175,7 @@ func (m model) View() string {
 	}
 	choices = lipgloss.JoinVertical(lipgloss.Center, header, choices)
 
+	// Colors and font settings for footer.
 	footer := lipgloss.NewStyle().Faint(true).Italic(true)
 	choices = lipgloss.JoinVertical(lipgloss.Center, choices, footer.Render("Vim keys or Tab/Shift Tab to select."))
 	choices = lipgloss.JoinVertical(lipgloss.Center, choices, footer.Render("Press esc/q to quit."))
