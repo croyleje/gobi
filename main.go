@@ -15,6 +15,8 @@ import (
 // function please https://github.com/charmbracelet/lipgloss for explanation of
 // how the colors are set 4,8,24 bit colors are supported.
 var (
+	USER = os.Getenv("USER")
+
 	termWidth, termHight int
 	heading              = lipgloss.NewStyle().Bold(true).Margin(1, 2)
 	notSelected          = lipgloss.NewStyle().Bold(true).Border(lipgloss.RoundedBorder()).BorderForeground(lipgloss.Color("12")).Width(14).Padding(1).Margin(1)
@@ -57,7 +59,7 @@ func parse(choice string) {
 		}
 
 	case "Logout":
-		cmd := exec.Command("loginctl", "terminate-user", "$USER")
+		cmd := exec.Command("loginctl", "terminate-user", USER)
 		err := cmd.Run()
 
 		if err != nil {
